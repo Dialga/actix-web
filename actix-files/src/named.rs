@@ -139,8 +139,8 @@ impl NamedFile {
                 _ => DispositionType::Attachment,
             };
 
-            // Replace newlines in filenames which could occur on some filesystems.
-            let filename_s = filename.replace('\n', "%0A");
+            // Replace whitespace characters in filenames which could occur on some filesystems.
+            let filename_s = filename.replace('\n', "%0A").replace('\v', "%0B").replace('\f', "%0C").replace('\r', "%0D");
             let mut parameters = vec![DispositionParam::Filename(filename_s)];
 
             if !filename.is_ascii() {
